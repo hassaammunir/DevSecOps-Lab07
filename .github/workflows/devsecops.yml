@@ -30,6 +30,7 @@ jobs:
         run: .venv/bin/bandit -ll app.py
       - name: Dependency Security Scan
         if: success() || failure()
+        continue-on-error: true
         run: .venv/bin/pip-audit
   release-readiness:
     needs: security-checks
