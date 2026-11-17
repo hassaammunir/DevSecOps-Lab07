@@ -1,0 +1,14 @@
+INFO:     Started server process [366]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2026-11-17 09:26:58,895 INFO method=GET path=/health status=200 duration_ms=1.1
+INFO:     127.0.0.1:36758 - "GET /health HTTP/1.1" 200 OK
+2026-11-17 09:26:58,901 INFO method=GET path=/search status=200 duration_ms=0.8
+INFO:     127.0.0.1:36766 - "GET /search?name=Alice HTTP/1.1" 200 OK
+2026-11-17 09:26:58,906 INFO method=GET path=/invalid status=404 duration_ms=0.1
+INFO:     127.0.0.1:36778 - "GET /invalid HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [366]

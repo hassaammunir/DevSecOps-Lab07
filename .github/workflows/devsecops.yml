@@ -1,0 +1,39 @@
+name: DevSecOps Pipeline
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r requirements.txt
+      - name: Execute Automated Tests
+        run: .venv/bin/python -m pytest -v
+      - name: Static Security Analysis
+        if: success() || failure()
+        run: .venv/bin/bandit -ll app.py
+      - name: Dependency Security Scan
+        if: success() || failure()
+        run: .venv/bin/pip-audit
+  release-readiness:
+    needs: security-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Approval
+        run: echo "Application passed all required checks."
